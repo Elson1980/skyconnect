@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import './App.css';
 
-const url = "http://localhost:4002/all";
+const url = "https://skyconnect-2b47.onrender.com";
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
     }, []);
 
     const getUsers = () => {
-        axios.get(`${url}`).then((getUsers) => {
+        axios.get(`${url}/allUsers`).then((getUsers) => {
             setUsers(getUsers.data);
             console.log(getUsers.data)
         }).catch((err) => {console.log(err) });
