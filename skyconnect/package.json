@@ -23,7 +23,7 @@
     "webpack": "^4.29.6"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "start": "node src/server/server.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/server.js",
