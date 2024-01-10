@@ -5,6 +5,16 @@ const cors = require("cors");
 const app = express();
 const sql = require('mssql');
 const parser = require("body-parser");
+const path = require("path");
+
+// Serve static files from the "dist" directory inside the "frontend" folder
+app.use(express.static(path.join(__dirname, "../../dist")));
+
+// Handle all other requests by serving the index.html for your frontend
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../dist"));
+});
+
 
 app.use('/', express.static('../../dist'));
 app.use(cors({ origin: true, credentials: true }));
