@@ -16,7 +16,7 @@ app.get("/*", (req, res) => {
 });
 
 
-app.use('/', express.static('../../dist'));
+//app.use('/', express.static('../../dist'));
 app.use(cors({ origin: true, credentials: true }));
 app.use(parser.json());
 app.use(express.urlencoded({ extended: false }));
