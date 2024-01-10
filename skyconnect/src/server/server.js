@@ -10,6 +10,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.static("dist"));
 app.use(parser.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/', express.static('dist'));
 
 const dbConfig = {
     user: process.env.URI_User, // better stored in an app setting such as process.env.DB_USER

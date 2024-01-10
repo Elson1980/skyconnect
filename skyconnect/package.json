@@ -4,6 +4,9 @@
   "private": false,
   "main": "src/server/server.js",
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,11 +17,11 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mssql": "^10.0.1",
-    "npm": "^10.2.5",
-    "react": "^18.2.0",
+    "node": "^20.10.0",
+    "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^3.0.1",
-    "run-script": "^0.1.1",
+    "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4",
     "webpack": "^4.29.6"
   },
@@ -28,6 +31,9 @@
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0"
   },
   "eslintConfig": {
     "extends": [
