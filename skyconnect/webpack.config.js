@@ -45,7 +45,7 @@ module.exports = {
         open: true,
         historyApiFallback: true,
         proxy: {
-            '/api': 'https://skyconnect.netlify.app'
+            '/api': 'https://skyconnect-2b47.onrender.com'
         }
     },
     plugins: [
