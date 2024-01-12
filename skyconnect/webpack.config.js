@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+var webpack = require('webpack');
 
 const outputDirectory = 'dist';
 
@@ -44,11 +45,14 @@ module.exports = {
         open: true,
         historyApiFallback: true,
         proxy: {
-            '/api': 'https://skyconnect-2b47.onrender.com'
+            '/api': 'https://skyconnect.netlify.app'
         }
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({ template: './public/index.html' }),
+        new webpack.ProvidePlugin({
+            "React": "react",
+        }),
     ]
 };

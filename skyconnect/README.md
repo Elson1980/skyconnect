@@ -1,3 +1,45 @@
+## Table of Contents
+
+- [General info](#general-info)
+- [Technologies](#technologies)
+- [Planning](#planning)
+- [Learning](#learning)
+- [Getting Started](#getting-started)
+
+## General info
+
+This project was created in order to satisfy our client Mr. Andrew's need for a polished Notes application.
+
+## Technologies
+
+This Project was created with:
+
+- REACT // ReactRouter
+- CSS
+- JavaScript
+- Express.js
+- AXIOS
+- MSSQL
+- Render
+- Netlify
+
+## Planning
+
+
+
+## Learning
+
+This project has expanded our knowledge with the use of libraries, authentication and collaborative tools.
+
+## Creators
+
+1. [Rober Feagley](robert.feagley@student.ctuonline.edu)
+2. [Jacob Casey](jacob.casey8@student.ctuonline.edu)
+3. [Kevin Richardson](kevin.richardson155@student.ctuonline.edu)
+5. [Michelle Elson](michelle.elson@my.cs.coloradotech.edu)
+
+*****************************************************************************************************************************************************************
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -6,18 +48,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -44,26 +81,6 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `npm run build` fails to minify
 
