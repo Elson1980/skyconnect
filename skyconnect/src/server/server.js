@@ -4,12 +4,13 @@ const express = require('express');
 const cors = require("cors");
 const app = express();
 const sql = require('mssql');
-//const parser = require("body-parser");
+const parser = require("body-parser");
+//const bcrypt = require('bcryptjs');
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.static("dist"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(parser.json());
+app.use(parser.urlencoded({ extended: false }));
 
 
 const dbConfig = {
@@ -29,25 +30,8 @@ const dbConfig = {
 app.get("/allUsers", async (req, res) => {
     try {
         var poolConnection = await sql.connect(dbConfig);
-        var resultSet = await poolConnection.request().query(`Select * FROM SkyConnect.dbo.Users`);
-        
-        //console.log(`${resultSet.recordset.length} rows returned.`);
-
-        // output column headers
-        var columns = "";
-        for (var column in resultSet.recordset.columns) {
-            columns += column + ", ";
-        }
-        //console.log("%s\t", columns.substring(0, columns.length - 2));
-
-        // ouput row contents from default record set
-        resultSet.recordset.forEach(row => {
-            console.log("%s\t%s", row.UserId, row.UserName);            
-        });
-        res.json(resultSet.recordset);
-        //res.json(resultSet.recordsets);
-        //console.log(resultSet);
-
+        var resultSet = await poolConnection.request().query(`Select * FROM SkyConnect.dbo.Users`); 
+        res.json(resultSet.recordsets);
         poolConnection.close();
   }
    catch (err) {
@@ -58,16 +42,12 @@ app.get("/allUsers", async (req, res) => {
 app.get("/user/:UserId?", async (req, res) => {
     try {
         const { UserId } = req.params;
-        console.log(req.params.UserId);
-        console.log(req.body);
-
+        //console.log(req.params.UserId);
+        //console.log(req.body);
         var poolConnection = await sql.connect(dbConfig);//await sql.createConnection(config);
 
         if (UserId !== undefined) {
-            var resultSet = await poolConnection.request().query(`Select * FROM SkyConnect.dbo.Users where UserId=${UserId}`,
-                [
-                    UserId
-                ]);
+        var resultSet = await poolConnection.request().input('UserId', sql.Int, UserId).query('Select * FROM SkyConnect.dbo.Users where UserId=@UserId');  
             res.json(resultSet.recordset);
         }
 
@@ -79,21 +59,23 @@ app.get("/user/:UserId?", async (req, res) => {
 })
 
 app.post("/login", async (req, res) => {
+
+    
     try {
         let userName = req.body[0].UserName;
         let userPassword = req.body[0].UserPassword;
-        let userRole = req.body.UserRole;
+        //let userRole = req.body.UserRole;
 
-            //console.log(userName);
+        console.log(req.body[0]);
         var poolConnection = await sql.connect(dbConfig);
 
-        if (userName && userPassword) {
-            var resultSet = await sql.poolConnection.request().query(
-                `Select * From SkyConnect.dbo.Users where UserName=${userName} and UserPassword=${userPassword}`,
-                [userName, userPassword]
-            );
-            console.log(req.body);
-            res.json(resultSet.recordset[0]);
+        if (req.body != null) {
+
+            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');  
+
+
+            console.log(req.body[0]);
+            res.json(resultSet.recordset);
             
         }
         poolConnection.close();
@@ -101,6 +83,7 @@ app.post("/login", async (req, res) => {
     catch (err) {
         console.log(err.message);
     }
+    
 
 });
 
