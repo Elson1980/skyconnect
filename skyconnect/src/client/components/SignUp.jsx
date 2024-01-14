@@ -1,5 +1,6 @@
 import plane from '../LoginPagePlane.png';
 import skyConnect from '../SkyConnect_logo_transparent.png';
+import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
@@ -88,17 +89,7 @@ signupBtn.onclick = function()
                     height: '100vh'
                 }}>
             <div class="container">
-                    <div class="navbar">
-                        <img src={skyConnect} className="App-logo" alt="logo" />
-                        <nav>
-                            <ul>
-                                <li><a href="HomePage.html">Home</a> </li>
-                                <li><a href="MyFlights.html">My Flights</a></li>
-                                <li><a href="About.html">About</a></li>
-                                <li><a href="SignIn.html">Sign In</a> </li>
-                            </ul>
-                        </nav>
-                    </div>
+                <Header />
                     <div class="form-box">
                         <h1 id="title">Sign Up</h1>
                         <form>

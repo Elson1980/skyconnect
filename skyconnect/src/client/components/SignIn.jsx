@@ -1,77 +1,28 @@
-import logo from '../logo.svg';
 import plane from '../LoginPagePlane.png';
 import skyConnect from '../SkyConnect_logo_transparent.png';
+import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TablePagination from '@mui/material/TablePagination';
-import Paper from '@mui/material/Paper';
 import axios from "axios";
 import '../App.css';
 
 const url = "https://skyconnect-2b47.onrender.com";
 
-let headerElement = ['User Id', 'User Name']
-
 function SignIn() {
+    
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();    
 
-    const [users, setUsers] = React.useState([]);
-    const [columns, setColumns] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-
-    React.useEffect(() => {
-        getUsers();
-    }, []);
-
-    const getUsers = () => {
-        axios.get(`${url}/allUsers`).then((getUsers) => {
-            setUsers(getUsers.data);
-            console.log(getUsers.data)
-        }).catch((err) => { console.log(err) });
-    };
-
-    /*
-    let eyeIcon = document.getElementById("eyeIcon");
-    let password = document.getElementById("password");
-    let email = document.getElementById("email")
-    let signinBtn = document.getElementById("signinBtn");
-    let title = document.getElementById("title");
-
-    eyeIcon.onclick = function (e) {
+    const handleSubmit = async e => {
         e.preventDefault();
 
-        if (password.type == "password") {
-            password.type = "text";
-        }
-        else {
-            password.type = "password";
-        }
-    }
-
-    signinBtn.onclick = function () {
-        document.getElementById("email").value;
-        document.getElementById("password").value
-
-        window.location.href = "HomePage.html";
-    }
-    */
+        //make post request
+        axios.post(`${url}/login`, { username, password })
+            .then(res => {
+                //console.log(res);
+            })
+    };
 
     return (
 
@@ -86,38 +37,29 @@ function SignIn() {
                     height: '100vh'
                 }}>
             <div class="container">
-                    <div class="container">
-                        <div class="navbar">
-                            <img src={skyConnect} className="App-logo" alt="logo" />
-                            <nav>
-                                <ul>
-                                    <li><a href="HomePage.html">Home</a> </li>
-                                    <li><a href="MyFlights.html">My Flights</a></li>
-                                    <li><a href="About.html">About</a></li>
-                                    <li><a href="SignIn.html">Sign In</a> </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        <div class="container">
+
+                       <Header />
 
                         <div class="form-box">
                             <h1 id="title">Sign In</h1>
-                            <form>
+                                <form onSubmit={handleSubmit} method="POST">
                                 <div class="input-group">
 
                                     <div class="input-field">
                                         <i class="fa-solid fa-envelope"></i>
-                                        <input type="email" id="email" placeholder="Email" required="true" />
+                                            <input type="username" id="username" name="username" value={username} placeholder="User Name" required="true" onChange={e => setUsername(e.target.value)} />
                                     </div>
 
                                     <div class="input-field">
                                         <i class="fa-solid fa-lock"></i>
-                                        <input type="password" placeholder="Password" id="password" required="true" />
+                                            <input type="password" placeholder="Password" name="password" value={password} id="password" required="true" onChange={e => setPassword(e.target.value)} />
                                         <button id="eyeIcon"><i class="fa-solid fa-eye-slash"></i></button>
                                     </div>
 
-                                        <br /><Link to={`ForgotPassword`}>Forgot Password</Link><br />
+                                        <br /><a href="/ForgotPassword">Forgot Password</a><br />
                                     <br />
-                                        <li><Link to={`SignUp`}>Sign Up</Link> </li>
+                                        <li><a href="/SignUp">Sign Up</a> </li>
 
                                 </div>
 

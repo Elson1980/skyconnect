@@ -4,14 +4,6 @@ import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TablePagination from '@mui/material/TablePagination';
-import Paper from '@mui/material/Paper';
 import axios from "axios";
 import '../App.css';
 
@@ -63,7 +55,7 @@ function ForgotPassword() {
                     <div class="container">
                             <Header />
 
-                        <p>This page will be a forgot password form</p>
+                            <p>This page will show some information about the website</p>
                     </div>
             </div>
                 </body >

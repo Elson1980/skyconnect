@@ -17,7 +17,7 @@ const dbConfig = {
     user: process.env.URI_User, 
     password: process.env.URI_Password, 
     server: process.env.URI, 
-    port: 1433, 
+    port: parseInt(process.env.URI_Port), 
     database: process.env.URI_Database, 
     authentication: {
         type: 'default'
@@ -42,8 +42,7 @@ app.get("/allUsers", async (req, res) => {
 app.get("/user/:UserId?", async (req, res) => {
     try {
         const { UserId } = req.params;
-        //console.log(req.params.UserId);
-        //console.log(req.body);
+
         var poolConnection = await sql.connect(dbConfig);//await sql.createConnection(config);
 
         if (UserId !== undefined) {
@@ -62,16 +61,15 @@ app.post("/login", async (req, res) => {
 
     
     try {
-        let userName = req.body[0].UserName;
-        let userPassword = req.body[0].UserPassword;
-        //let userRole = req.body.UserRole;
 
-        console.log(req.body[0]);
+        const { UserName } = req.body;
+        const { UserPassword } = req.body;        
+
         var poolConnection = await sql.connect(dbConfig);
 
         if (req.body != null) {
 
-            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');  
+            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@UserName and UserPassword=@Userpassword');  
 
 
             console.log(req.body[0]);
@@ -87,8 +85,7 @@ app.post("/login", async (req, res) => {
 
 });
 
-app.post("/test", async (req, res) => {
-    
+app.post("/test", async (req, res) => {       
     console.log(req.body)
 });
 

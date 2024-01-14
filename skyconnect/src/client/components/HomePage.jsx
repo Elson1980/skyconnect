@@ -1,6 +1,7 @@
 import logo from '../logo.svg';
 import plane from '../LoginPagePlane.png';
 import skyConnect from '../SkyConnect_logo_transparent.png';
+import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
@@ -20,19 +21,6 @@ const url = "https://skyconnect-2b47.onrender.com";
 function HomePage() {
 
     const [users, setUsers] = React.useState([]);
-    const [columns, setColumns] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
 
     React.useEffect(() => {
         getUsers();
@@ -41,7 +29,7 @@ function HomePage() {
     const getUsers = () => {
         axios.get(`${url}/allUsers`).then((getUsers) => {
             setUsers(getUsers.data);
-            console.log(getUsers.data)
+            //console.log(getUsers.data)
         }).catch((err) => { console.log(err) });
     };
     /*
@@ -67,17 +55,7 @@ function HomePage() {
                 width: '100vw',
                 height: '100vh'
             }}>
-                <div class="navbar">
-
-                    <nav>
-                        <ul>
-                            <li><a href="HomePage.html">Home</a> </li>
-                            <li><a href="MyFlights.html">My Flights</a></li>
-                            <li><a href="About.html">About</a></li>
-                            <li><Link to={`SignIn` }>Sign In</Link> </li>
-                        </ul>
-                    </nav>
-                </div>
+            <Header />
 
                 <div class="row">
                     <div class="col">
