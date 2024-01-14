@@ -69,7 +69,7 @@ app.post("/login", async (req, res) => {
 
         if (req.body != null) {
 
-            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@UserName and UserPassword=@Userpassword');  
+            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, UserName).input('UserPassword', sql.VarChar, UserPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@UserName and UserPassword=@Userpassword');  
 
 
             console.log(req.body[0]);
