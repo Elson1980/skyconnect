@@ -18,7 +18,7 @@ function MyFlights() {
         <>
             <Myflights>
 
-                <body style={{
+                <div style={{
                     backgroundImage: `url(${plane})`, backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
@@ -33,7 +33,7 @@ function MyFlights() {
                                 flights that they have booked.</p>
                         </div>
                     </div>
-                </body >
+                </div >
 
             </Myflights>
         </>
@@ -42,7 +42,7 @@ function MyFlights() {
 
 export default MyFlights;
 
-const Myflights = styled.body`
+const Myflights = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;

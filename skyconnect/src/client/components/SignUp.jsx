@@ -81,7 +81,7 @@ signupBtn.onclick = function()
         <>
         <Signup>
 
-                <body style={{
+                <div style={{
                     backgroundImage: `url(${plane})`, backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
@@ -124,7 +124,7 @@ signupBtn.onclick = function()
                         </form>
                     </div>
             </div>
-                </body >
+                </div >
 
             </Signup>
         </>
@@ -134,7 +134,7 @@ signupBtn.onclick = function()
 
 export default SignUp;
 
-const Signup = styled.body`
+const Signup = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;

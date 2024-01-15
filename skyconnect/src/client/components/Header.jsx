@@ -25,7 +25,7 @@ function Header() {
 
 export default Header;
 
-const HeaderBody = styled.body`
+const HeaderBody = styled.div`
 
 .navbar
 {

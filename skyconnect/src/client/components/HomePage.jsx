@@ -48,16 +48,16 @@ function HomePage() {
         <>
         <SearchFlights>
 
-            <body style={{
-                backgroundImage: `url(${plane})`, backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                width: '100vw',
-                height: '100vh'
-            }}>
-            <Header />
+                <div style={{
+                    backgroundImage: `url(${plane})`, backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    width: '100vw',
+                    height: '100vh'
+                }}>
 
-                <div class="row">
+            <Header />
+                    <div class="row"> 
                     <div class="col">
                         <img src={skyConnect} className="App-logo" alt="logo" />
                         <h1>Book Now</h1>
@@ -100,7 +100,7 @@ function HomePage() {
                     </div>
                 </div>
 
-            </body>
+                </div>
         </SearchFlights>
         </>
     );
@@ -108,7 +108,7 @@ function HomePage() {
 
 export default HomePage;
 
-const SearchFlights = styled.body`
+const SearchFlights = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;

@@ -11,49 +11,70 @@ const url = "https://skyconnect-2b47.onrender.com";
 
 function SignIn() {
     
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();    
+    const [username, setUsername] = userState("");
+    const [password, setPassword] = userState("");
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    React.useEffect(() => {
+        getUsers();
+    }, []);
+
+    function recordUsername(value) {
+        setUsername(() => value);
+    };
+
+    function recordPassword(value) {
+        setPassword(() => value);
+    };
 
     const handleSubmit = async e => {
         e.preventDefault();
 
-        //make post request
-        axios.post(`${url}/login`, { username, password })
-            .then(res => {
-                //console.log(res);
+        const userData = {
+            UserName: username,
+            UserPassword: password
+        }
+       
+        axios.post(`${url}/login`, userData)
+            .then(function (res) {
+                setLoggedIn(true);
+                console.log(userData);
             })
-    };
+            .catch(function (err) {
+                console.log(err);
+            })
+
+    }
+ 
 
     return (
 
     <>
         <Signin>
 
-                <body style={{
-                    backgroundImage: `url(${plane})`, backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    width: '100vw',
-                    height: '100vh'
-                }}>
+            <div style={{
+                backgroundImage: `url(${plane})`, backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                width: '100vw',
+                height: '100vh'
+            }}>
             <div class="container">
-                        <div class="container">
-
-                       <Header />
-
-                        <div class="form-box">
-                            <h1 id="title">Sign In</h1>
-                                <form onSubmit={handleSubmit} method="POST">
+                <div class="container">
+                   <Header />
+                    <div class="form-box">
+                        <h1 id="title">Sign In</h1>
+                            <form onSubmit={handleSubmit}>
                                 <div class="input-group">
 
                                     <div class="input-field">
                                         <i class="fa-solid fa-envelope"></i>
-                                            <input type="username" id="username" name="username" value={username} placeholder="User Name" required="true" onChange={e => setUsername(e.target.value)} />
+                                            <input htmlFor="UserName" type="username" id="username" name="UserName" placeholder="User Name" required="true"  />
                                     </div>
 
                                     <div class="input-field">
                                         <i class="fa-solid fa-lock"></i>
-                                            <input type="password" placeholder="Password" name="password" value={password} id="password" required="true" onChange={e => setPassword(e.target.value)} />
+                                            <input htmlFor="UserPassword" type="password" placeholder="Password" name="UserPassword" value={data.password} id="password" required="true"  />
                                         <button id="eyeIcon"><i class="fa-solid fa-eye-slash"></i></button>
                                     </div>
 
@@ -70,8 +91,8 @@ function SignIn() {
                             </form>
                         </div>
                     </div>
-            </div>
-                </body >
+                </div>
+            </div >
 
         </Signin>
         </>
@@ -80,7 +101,7 @@ function SignIn() {
 
 export default SignIn;
 
-const Signin = styled.body`
+const Signin = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;

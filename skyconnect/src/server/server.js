@@ -27,6 +27,7 @@ const dbConfig = {
     }
 }
 
+//Returns all users, just testing the backend connection
 app.get("/allUsers", async (req, res) => {
     try {
         var poolConnection = await sql.connect(dbConfig);

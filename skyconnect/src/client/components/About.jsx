@@ -44,7 +44,7 @@ function ForgotPassword() {
     <>
         <Forgotpassword>
 
-                <body style={{
+                <div style={{
                     backgroundImage: `url(${plane})`, backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
@@ -58,7 +58,7 @@ function ForgotPassword() {
                             <p>This page will show some information about the website</p>
                     </div>
             </div>
-                </body >
+                </div >
 
         </Forgotpassword>
         </>
@@ -67,7 +67,7 @@ function ForgotPassword() {
 
 export default ForgotPassword;
 
-const Forgotpassword = styled.body`
+const Forgotpassword = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
