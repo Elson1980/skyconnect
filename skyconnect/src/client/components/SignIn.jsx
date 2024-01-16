@@ -1,8 +1,6 @@
 import plane from '../LoginPagePlane.png';
-import skyConnect from '../SkyConnect_logo_transparent.png';
 import Header from './Header.jsx';
 import styled from "styled-components";
-import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import '../App.css';
@@ -11,12 +9,12 @@ const url = "https://skyconnect-2b47.onrender.com";
 
 function SignIn() {
     
-    const [username, setUsername] = userState("");
-    const [password, setPassword] = userState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
 
     React.useEffect(() => {
-        getUsers();
+       //handleSubmit();
     }, []);
 
     function recordUsername(value) {
@@ -59,23 +57,23 @@ function SignIn() {
                 width: '100vw',
                 height: '100vh'
             }}>
-            <div class="container">
-                <div class="container">
+            <div className="container">
+                <div className="container">
                    <Header />
-                    <div class="form-box">
+                    <div className="form-box">
                         <h1 id="title">Sign In</h1>
                             <form onSubmit={handleSubmit}>
-                                <div class="input-group">
+                                <div className="input-group">
 
-                                    <div class="input-field">
-                                        <i class="fa-solid fa-envelope"></i>
-                                            <input htmlFor="UserName" type="username" id="username" name="UserName" placeholder="User Name" required="true"  />
+                                    <div className="input-field">
+                                        <i className="fa-solid fa-envelope"></i>
+                                            <input htmlFor="UserName" type="username" id="username" name="UserName" placeholder="User Name" required={true} onChange={(e) => { recordUsername(e.target.value) } } />
                                     </div>
 
-                                    <div class="input-field">
-                                        <i class="fa-solid fa-lock"></i>
-                                            <input htmlFor="UserPassword" type="password" placeholder="Password" name="UserPassword" value={data.password} id="password" required="true"  />
-                                        <button id="eyeIcon"><i class="fa-solid fa-eye-slash"></i></button>
+                                    <div className="input-field">
+                                        <i className="fa-solid fa-lock"></i>
+                                            <input htmlFor="UserPassword" type="password" placeholder="Password" name="UserPassword" id="password" required={true} onChange={(e) => { recordPassword(e.target.value) }} />
+                                        <button id="eyeIcon"><i className="fa-solid fa-eye-slash"></i></button>
                                     </div>
 
                                         <br /><a href="/ForgotPassword">Forgot Password</a><br />
@@ -84,7 +82,7 @@ function SignIn() {
 
                                 </div>
 
-                                <div class="btn-field">
+                                <div className="btn-field">
                                     <button type="submit" id="signinBtn">Sign In</button>
                                 </div>
 
@@ -118,7 +116,7 @@ const Signin = styled.div`
 {
     width: 100%;
     height:100vh;
-    background-image: linear-gradient(rgba(0,0,50,0), rgba(0,0,50,0.8)), url(LoginPagePlane.webp);
+    background-image: linear-gradient(rgba(0,0,50,0), rgba(0,0,50,0.8));
     background-position: center;
     background-size: cover;
     position: relative;

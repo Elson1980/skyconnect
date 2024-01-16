@@ -57,8 +57,8 @@ function HomePage() {
                 }}>
 
             <Header />
-                    <div class="row"> 
-                    <div class="col">
+                    <div className="row"> 
+                    <div className="col">
                         <img src={skyConnect} className="App-logo" alt="logo" />
                         <h1>Book Now</h1>
                         <p>
@@ -69,23 +69,23 @@ function HomePage() {
                         </p>
                     </div>
 
-                    <div class="col2">
-                        <div class="form-box">
+                    <div className="col2">
+                        <div className="form-box">
                             <h1 id="title">Search Flights</h1>
                             <form>
-                                <label for="from">From:</label>
+                                <label htmlFor="from">From:</label>
                                 <input type="text" id="from" name="from" placeholder="Departure city" required />
 
-                                <label for="to">To:</label>
+                                    <label htmlFor="to">To:</label>
                                 <input type="text" id="to" name="to" placeholder="Destination city" required />
 
-                                <label for="depart">Departure Date:</label>
+                                    <label htmlFor="depart">Departure Date:</label>
                                 <input type="date" id="depart" name="depart" required />
 
-                                <label for="return">Return Date:</label>
+                                    <label htmlFor="return">Return Date:</label>
                                 <input type="date" id="return" name="return" />
 
-                                <label for="class">Class:</label>
+                                    <label htmlFor="class">Class:</label>
                                 <select id="class" name="class">
                                     <option value="economy">Economy</option>
                                     <option value="business">Business</option>

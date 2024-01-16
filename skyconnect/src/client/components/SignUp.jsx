@@ -88,36 +88,36 @@ signupBtn.onclick = function()
                     width: '100vw',
                     height: '100vh'
                 }}>
-            <div class="container">
+            <div className="container">
                 <Header />
-                    <div class="form-box">
+                    <div className="form-box">
                         <h1 id="title">Sign Up</h1>
                         <form>
-                            <div class="input-group">
+                            <div className="input-group">
 
-                                <div class="input-field" id="nameField">
-                                    <i class="fa-solid fa-user"></i>
+                                <div className="input-field" id="nameField">
+                                    <i className="fa-solid fa-user"></i>
                                     <input type="text" placeholder="Name" required />
                                 </div>
 
-                                <div class="input-field">
-                                    <i class="fa-solid fa-envelope"></i>
+                                <div className="input-field">
+                                    <i className="fa-solid fa-envelope"></i>
                                     <input type="email" id="email" placeholder="Email" required />
                                 </div>
 
-                                <div class="input-field" id="phoneField">
-                                    <i class="fa-solid fa-phone"></i>
+                                <div className="input-field" id="phoneField">
+                                    <i className="fa-solid fa-phone"></i>
                                     <input type="tel" placeholder="Phone" />
                                 </div>
 
-                                <div class="input-field">
-                                    <i class="fa-solid fa-lock"></i>
+                                <div className="input-field">
+                                    <i className="fa-solid fa-lock"></i>
                                     <input type="password" placeholder="Password" id="password" required />
-                                    <button id="eyeIcon"><i class="fa-solid fa-eye-slash"></i></button>
+                                    <button id="eyeIcon"><i className="fa-solid fa-eye-slash"></i></button>
                                 </div>
                             </div>
 
-                            <div class="btn-field">
+                            <div className="btn-field">
                                 <button type="button" id="signupBtn">Sign Up</button>
                             </div>
 
@@ -150,7 +150,7 @@ const Signup = styled.div`
 {
     width: 100%;
     height:100vh;
-    background-image: linear-gradient(rgba(0,0,50,0), rgba(0,0,50,0.8)), url(LoginPagePlane.webp);
+    background-image: linear-gradient(rgba(0,0,50,0), rgba(0,0,50,0.8));
     background-position: center;
     background-size: cover;
     position: relative;

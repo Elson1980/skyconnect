@@ -51,8 +51,8 @@ function ForgotPassword() {
                     width: '100vw',
                     height: '100vh'
                 }}>
-            <div class="container">
-                    <div class="container">
+            <div className="container">
+                    <div className="container">
                             <Header />
 
                             <p>This page will show some information about the website</p>
