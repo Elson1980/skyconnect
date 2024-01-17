@@ -10,8 +10,6 @@
 
 This project was created in order to satisfy our client Mr. Andrew's need for a polished Notes application.
 
-Link to Website:  https://skyconnect.netlify.app
-
 ## Technologies
 
 This Project was created with:

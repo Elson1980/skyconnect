@@ -8,13 +8,13 @@ function Header() {
     return (
         <>
             <HeaderBody>
-                    <div className="navbar">
+                    <div class="navbar">
                         <nav>
                             <ul>
-                                <li><a href="/">Home</a> </li>
-                                <li><a href="/MyFlights">My Flights</a> </li>
-                                <li><a href="/About">About</a> </li>
-                                <li><a href="/SignIn">Sign In</a> </li>
+                            <li><Link to="/">Home</Link> </li>
+                            <li><Link to="MyFlights">My Flights</Link> </li>
+                            <li><Link to="About">About</Link> </li>
+                            <li><Link to={'./SignIn'} >Sign In</Link> </li>
                             </ul>
                         </nav>
                     </div>
@@ -25,7 +25,7 @@ function Header() {
 
 export default Header;
 
-const HeaderBody = styled.div`
+const HeaderBody = styled.body`
 
 .navbar
 {

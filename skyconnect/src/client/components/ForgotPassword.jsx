@@ -1,6 +1,4 @@
-import plane from '../LoginPagePlane.png';
 import skyConnect from '../SkyConnect_logo_transparent.png';
-import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
@@ -52,21 +50,14 @@ function ForgotPassword() {
     <>
         <Forgotpassword>
 
-                <div style={{
-                    backgroundImage: `url(${plane})`, backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    width: '100vw',
-                    height: '100vh'
-                }}>
+              
             <div className="container">
                     <div className="container">
-                            <Header />
 
                         <p>This page will be a forgot password form</p>
                     </div>
             </div>
-                </div >
+              
 
         </Forgotpassword>
         </>
@@ -75,7 +66,7 @@ function ForgotPassword() {
 
 export default ForgotPassword;
 
-const Forgotpassword = styled.div`
+const Forgotpassword = styled.body`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;

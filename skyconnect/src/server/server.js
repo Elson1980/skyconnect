@@ -17,7 +17,7 @@ const dbConfig = {
     user: process.env.URI_User, 
     password: process.env.URI_Password, 
     server: process.env.URI, 
-    port: parseInt(process.env.URI_Port), 
+    port: 1433, 
     database: process.env.URI_Database, 
     authentication: {
         type: 'default'
@@ -27,7 +27,6 @@ const dbConfig = {
     }
 }
 
-//Returns all users, just testing the backend connection
 app.get("/allUsers", async (req, res) => {
     try {
         var poolConnection = await sql.connect(dbConfig);
@@ -43,7 +42,8 @@ app.get("/allUsers", async (req, res) => {
 app.get("/user/:UserId?", async (req, res) => {
     try {
         const { UserId } = req.params;
-
+        //console.log(req.params.UserId);
+        //console.log(req.body);
         var poolConnection = await sql.connect(dbConfig);//await sql.createConnection(config);
 
         if (UserId !== undefined) {
@@ -62,15 +62,16 @@ app.post("/login", async (req, res) => {
 
     
     try {
+        let userName = req.body[0].UserName;
+        let userPassword = req.body[0].UserPassword;
+        //let userRole = req.body.UserRole;
 
-        const { UserName } = req.body;
-        const { UserPassword } = req.body;        
-
+        console.log(req.body[0]);
         var poolConnection = await sql.connect(dbConfig);
 
         if (req.body != null) {
 
-            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, UserName).input('UserPassword', sql.VarChar, UserPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@UserName and UserPassword=@Userpassword');  
+            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');  
 
 
             console.log(req.body[0]);
@@ -86,7 +87,8 @@ app.post("/login", async (req, res) => {
 
 });
 
-app.post("/test", async (req, res) => {       
+app.post("/test", async (req, res) => {
+    
     console.log(req.body)
 });
 

@@ -1,6 +1,4 @@
-import plane from '../LoginPagePlane.png';
 import skyConnect from '../SkyConnect_logo_transparent.png';
-import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
@@ -81,50 +79,42 @@ signupBtn.onclick = function()
         <>
         <Signup>
 
-                <div style={{
-                    backgroundImage: `url(${plane})`, backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    width: '100vw',
-                    height: '100vh'
-                }}>
             <div className="container">
-                <Header />
                     <div className="form-box">
                         <h1 id="title">Sign Up</h1>
                         <form>
-                            <div className="input-group">
+                            <div class="input-group">
 
-                                <div className="input-field" id="nameField">
-                                    <i className="fa-solid fa-user"></i>
+                                <div class="input-field" id="nameField">
+                                    <i class="fa-solid fa-user"></i>
                                     <input type="text" placeholder="Name" required />
                                 </div>
 
-                                <div className="input-field">
-                                    <i className="fa-solid fa-envelope"></i>
+                                <div class="input-field">
+                                    <i class="fa-solid fa-envelope"></i>
                                     <input type="email" id="email" placeholder="Email" required />
                                 </div>
 
-                                <div className="input-field" id="phoneField">
-                                    <i className="fa-solid fa-phone"></i>
+                                <div class="input-field" id="phoneField">
+                                    <i class="fa-solid fa-phone"></i>
                                     <input type="tel" placeholder="Phone" />
                                 </div>
 
-                                <div className="input-field">
-                                    <i className="fa-solid fa-lock"></i>
+                                <div class="input-field">
+                                    <i class="fa-solid fa-lock"></i>
                                     <input type="password" placeholder="Password" id="password" required />
-                                    <button id="eyeIcon"><i className="fa-solid fa-eye-slash"></i></button>
+                                    <button id="eyeIcon"><i class="fa-solid fa-eye-slash"></i></button>
                                 </div>
                             </div>
 
-                            <div className="btn-field">
+                            <div class="btn-field">
                                 <button type="button" id="signupBtn">Sign Up</button>
                             </div>
 
                         </form>
                     </div>
             </div>
-                </div >
+               
 
             </Signup>
         </>
@@ -134,7 +124,7 @@ signupBtn.onclick = function()
 
 export default SignUp;
 
-const Signup = styled.div`
+const Signup = styled.body`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
@@ -150,7 +140,7 @@ const Signup = styled.div`
 {
     width: 100%;
     height:100vh;
-    background-image: linear-gradient(rgba(0,0,50,0), rgba(0,0,50,0.8));
+    background-image: linear-gradient(rgba(0,0,50,0), rgba(0,0,50,0.8)), url(LoginPagePlane.webp);
     background-position: center;
     background-size: cover;
     position: relative;

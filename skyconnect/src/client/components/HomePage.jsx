@@ -1,7 +1,4 @@
-import logo from '../logo.svg';
-import plane from '../LoginPagePlane.png';
 import skyConnect from '../SkyConnect_logo_transparent.png';
-import Header from './Header.jsx';
 import styled from "styled-components";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
@@ -29,7 +26,7 @@ function HomePage() {
     const getUsers = () => {
         axios.get(`${url}/allUsers`).then((getUsers) => {
             setUsers(getUsers.data);
-            //console.log(getUsers.data)
+            console.log(getUsers.data)
         }).catch((err) => { console.log(err) });
     };
     /*
@@ -46,46 +43,38 @@ function HomePage() {
     return (
 
         <>
-        <SearchFlights>
+            <SearchFlights>
 
-                <div style={{
-                    backgroundImage: `url(${plane})`, backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    width: '100vw',
-                    height: '100vh'
-                }}>
-
-            <Header />
+                             
                     <div className="row"> 
-                    <div className="col">
-                        <img src={skyConnect} className="App-logo" alt="logo" />
-                        <h1>Book Now</h1>
-                        <p>
-                            Sign up now to get started booking your
-                            next flight, or if you already have an account you
-                            can sign in and manage existing flights or book new ones.
-                            Thanks for choosing SkyConnect safe travels!
-                        </p>
-                    </div>
+                        <div className="col">
+                            <img src={skyConnect} className="App-logo" alt="logo" />
+                            <h1>Book Now</h1>
+                            <p>
+                                Sign up now to get started booking your
+                                next flight, or if you already have an account you
+                                can sign in and manage existing flights or book new ones.
+                                Thanks for choosing SkyConnect safe travels!
+                            </p>
+                        </div>
 
-                    <div className="col2">
-                        <div className="form-box">
+                    <div class="col2">
+                        <div class="form-box">
                             <h1 id="title">Search Flights</h1>
                             <form>
-                                <label htmlFor="from">From:</label>
+                                <label for="from">From:</label>
                                 <input type="text" id="from" name="from" placeholder="Departure city" required />
 
-                                    <label htmlFor="to">To:</label>
+                                <label for="to">To:</label>
                                 <input type="text" id="to" name="to" placeholder="Destination city" required />
 
-                                    <label htmlFor="depart">Departure Date:</label>
+                                <label for="depart">Departure Date:</label>
                                 <input type="date" id="depart" name="depart" required />
 
-                                    <label htmlFor="return">Return Date:</label>
+                                <label for="return">Return Date:</label>
                                 <input type="date" id="return" name="return" />
 
-                                    <label htmlFor="class">Class:</label>
+                                <label for="class">Class:</label>
                                 <select id="class" name="class">
                                     <option value="economy">Economy</option>
                                     <option value="business">Business</option>
@@ -98,7 +87,7 @@ function HomePage() {
 
                         </div>
                     </div>
-                </div>
+                
 
                 </div>
         </SearchFlights>
@@ -108,7 +97,7 @@ function HomePage() {
 
 export default HomePage;
 
-const SearchFlights = styled.div`
+const SearchFlights = styled.body`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
