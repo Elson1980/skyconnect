@@ -11,6 +11,12 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.static("dist"));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
+
+//app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 
 
 const dbConfig = {
@@ -27,6 +33,10 @@ const dbConfig = {
     }
 }
 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/HomePage.jsx')
+})
+
 app.get("/allUsers", async (req, res) => {
     try {
         var poolConnection = await sql.connect(dbConfig);
@@ -42,9 +52,6 @@ app.get("/allUsers", async (req, res) => {
 app.get("/user/:UserId?", async (req, res) => {
     try {
         const { UserId } = req.params;
-        //console.log(req.params.UserId);
-        //console.log(req.body);
-        var poolConnection = await sql.connect(dbConfig);//await sql.createConnection(config);
 
         if (UserId !== undefined) {
         var resultSet = await poolConnection.request().input('UserId', sql.Int, UserId).query('Select * FROM SkyConnect.dbo.Users where UserId=@UserId');  
@@ -60,30 +67,57 @@ app.get("/user/:UserId?", async (req, res) => {
 
 app.post("/login", async (req, res) => {
 
-    
+
     try {
         let userName = req.body[0].UserName;
         let userPassword = req.body[0].UserPassword;
-        //let userRole = req.body.UserRole;
 
         console.log(req.body[0]);
         var poolConnection = await sql.connect(dbConfig);
 
-        if (req.body != null) {
-
-            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');  
-
-
-            console.log(req.body[0]);
-            res.json(resultSet.recordset);
-            
+        if (userName != undefined && userPassword != undefined) {
+            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
+            //req.session.user = username;
+            //res.redirect('/HomePage');
+            if (resultSet > 0) {
+                res.json(resultSet.recordset);
+            } else {
+                res.send('Invalid Credentials. Please Try Again.');
+            }            
         }
         poolConnection.close();
     }
     catch (err) {
         console.log(err.message);
+        res.status(500).send('Internal Server Error');
     }
-    
+});
+
+app.get('/HomePage', (req, res) => {
+    if (req.session.user) {
+        res.send(`Welcome, ${req.session.user}!`);
+    } else {
+        res.redirect('/');
+    }
+})
+
+app.post("/signUp", async (req, res) => {
+
+
+    try {
+        const newUser = await poolConnection
+            .request()
+            .input('UserName', sql.VarChar, userName)
+            .input('UserPassword', sql.VarChar, userPassword)
+            .query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
+
+
+        poolConnection.close();
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+
 
 });
 
