@@ -74,13 +74,15 @@ app.post("/login", async (req, res) => {
         let userName = req.body[0].UserName;
         let userPassword = req.body[0].UserPassword;
 
+        console.log(userName, userPassword);
+
         var poolConnection = await sql.connect(dbConfig);
     try {       
         
             var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');      
          
             if (resultSet != null) {
-                console.log(userName, password, resultSet.recordset);
+                console.log(userName, userPassword, resultSet.recordset);
                 res.json(resultSet.recordset);
             } else {
                 res.send('Invalid Credentials. Please Try Again.');
