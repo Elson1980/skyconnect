@@ -13,7 +13,7 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
 app.use(cors({
     origin: "*",
-    , credentials: true,
+    credentials: true,
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
 }));
 
