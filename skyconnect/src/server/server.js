@@ -5,17 +5,17 @@ const cors = require("cors");
 const app = express();
 const sql = require('mssql');
 const parser = require("body-parser");
-const { PassThrough } = require("stream");
+//const { PassThrough } = require("stream");
 //const bcrypt = require('bcryptjs');
 
-app.use(cors({ origin: true, credentials: true }));
 app.use(express.static("dist"));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "*",
+    , credentials: true,
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-  }));
+}));
 
 //app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 
@@ -33,8 +33,6 @@ const dbConfig = {
         encrypt: true
     }
 }
-
-
 
 app.get("/allUsers", async (req, res) => {
     try {
@@ -68,15 +66,14 @@ app.post("/login", async (req, res) => {
         let userName = req.body[0].UserName;
         let userPassword = req.body[0].UserPassword;
 
-        console.log(userName, userPassword);
-
         var poolConnection = await sql.connect(dbConfig);
     try {       
         
-            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');      
+            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
+            //req.session.user = username;
+            //res.redirect('/HomePage');
          
-            if (resultSet != null) {
-                console.log(userName, userPassword, resultSet.recordset);
+        if (resultSet != null) {
                 res.json(resultSet.recordset);
             } else {
                 res.send('Invalid Credentials. Please Try Again.');
