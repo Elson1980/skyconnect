@@ -62,19 +62,22 @@ app.get("/user/:UserId?", async (req, res) => {
     }
 })
 
-app.post("/login", async (req, res) => {
-        let userName = req.body[0].UserName;
-        let userPassword = req.body[0].UserPassword;
+app.post("/SignIn", async (req, res) => {
 
-        var poolConnection = await sql.connect(dbConfig);
+    let userName = req.body.UserName;
+    let userPassword = req.body.UserPassword;
+    let poolConnection = await sql.connect(dbConfig);
+
+
     try {       
         
             var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
-            //req.session.user = username;
-            //res.redirect('/HomePage');
+
          
-        if (resultSet != null) {
-                res.json(resultSet.recordset);
+        if (resultSet.recordset.length == 1) {
+            //res.json(resultSet.recordset);
+            res.status(200).send('logged in')
+                console.log('success')
             } else {
                 res.send('Invalid Credentials. Please Try Again.');
             }            
@@ -95,7 +98,7 @@ app.post("/login", async (req, res) => {
 //    }
 //})
 
-app.post("/signUp", async (req, res) => {
+app.post("/SignUp", async (req, res) => {
 
 
     try {
@@ -105,11 +108,12 @@ app.post("/signUp", async (req, res) => {
             .input('UserPassword', sql.VarChar, userPassword)
             .query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
 
-
+        res.status(200).json({ message: 'Data inserted successfully', resultSet });
         poolConnection.close();
     }
     catch (err) {
         console.log(err.message);
+        res.status(500).send('Internal Server Error');
     }
 
 
