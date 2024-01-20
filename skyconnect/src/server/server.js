@@ -71,7 +71,10 @@ app.post("/SignIn", async (req, res) => {
 
     try {       
         
-            var resultSet = await poolConnection.request().input('UserName', sql.VarChar, userName).input('UserPassword', sql.VarChar, userPassword).query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
+        var resultSet = await poolConnection.request()
+            .input('UserName', sql.VarChar, userName)
+            .input('UserPassword', sql.VarChar, userPassword)
+            .query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
 
          
         if (resultSet.recordset.length == 1) {
@@ -100,24 +103,31 @@ app.post("/SignIn", async (req, res) => {
 
 app.post("/SignUp", async (req, res) => {
 
+    let poolConnection = await sql.connect(dbConfig);
 
+    const userFirstName = req.body.UserFirstName;
+    const userLastName = req.body.UserLastName;
+    const userEmail = req.body.UserEmail;
+    const userPhoneNumber = req.body.UserPhoneNumber;
+    const userName = req.body.UserName;
+    const userPassword = req.body.UserPassword;
+    const roleId = req.body.RoleId;
+    
     try {
         const newUser = await poolConnection
             .request()
-            .input('UserName', sql.VarChar, userName)
-            .input('UserPassword', sql.VarChar, userPassword)
-            .query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
+            .query(`INSERT INTO SkyConnect.dbo.Users (UserFirstName, UserLastName, UserEmail, UserPhoneNumber, UserName, UserPassword, RoleId)
+                VALUES ('${userFirstName}', '${userLastName}', '${userEmail}', '${userPhoneNumber}', '${userName}', '${userPassword}', ${roleId})`);
 
-        res.status(200).json({ message: 'Data inserted successfully', resultSet });
+        res.status(200).json({ message: 'Data inserted successfully', newUser });
         poolConnection.close();
     }
     catch (err) {
         console.log(err.message);
         res.status(500).send('Internal Server Error');
     }
-
-
 });
+
 
 app.post("/test", async (req, res) => {
     
