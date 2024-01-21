@@ -46,6 +46,42 @@ app.get("/allUsers", async (req, res) => {
    }
 })
 
+app.post("/flights", async (req, res) => {
+    try {
+        const { FlightDepartureCity, FlightArrivalCity, FlightDepartureDate, FlightReturnDate } = req.body;
+
+        var poolConnection = await sql.connect(dbConfig);        
+
+        var departureSet = await poolConnection.request()
+            .input('FlightDepartureCity', sql.VarChar, FlightDepartureCity)
+            .input('FlightArrivalCity', sql.VarChar, FlightArrivalCity)
+            .input('FlightDepartureDate', sql.Date, FlightDepartureDate)
+            .query('Select * FROM SkyConnect.dbo.Flights where FlightDepartureCity=@FlightDepartureCity and FlightArrivalCity=@FlightArrivalCity and FlightDepartureDate=@FlightDepartureDate');  
+        
+
+            res.json(departureSet.recordset);
+            console.log(departureSet.recordset);
+
+
+        poolConnection.close();
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+});
+
+app.get("/allFlights", async (req, res) => {
+    try {       
+        var poolConnection = await sql.connect(dbConfig);
+        var resultSet = await poolConnection.request().query(`Select * FROM SkyConnect.dbo.Flights`);
+        res.json(resultSet.recordsets);
+        poolConnection.close();
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+});
+
 app.get("/user/:UserId?", async (req, res) => {
     try {
         const { UserId } = req.params;
