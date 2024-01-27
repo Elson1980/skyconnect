@@ -50,18 +50,21 @@ app.post("/flights", async (req, res) => {
     try {
         const { FlightDepartureCity, FlightArrivalCity, FlightDepartureDate, FlightReturnDate } = req.body;
 
-        var poolConnection = await sql.connect(dbConfig);        
+        var poolConnection = await sql.connect(dbConfig);
 
         var departureSet = await poolConnection.request()
             .input('FlightDepartureCity', sql.VarChar, FlightDepartureCity)
             .input('FlightArrivalCity', sql.VarChar, FlightArrivalCity)
             .input('FlightDepartureDate', sql.Date, FlightDepartureDate)
-            .query('Select * FROM SkyConnect.dbo.Flights where FlightDepartureCity=@FlightDepartureCity and FlightArrivalCity=@FlightArrivalCity and FlightDepartureDate=@FlightDepartureDate');  
-        
+            .query('Select * FROM SkyConnect.dbo.Flights where FlightDepartureCity=@FlightDepartureCity and FlightArrivalCity=@FlightArrivalCity and FlightDepartureDate=@FlightDepartureDate');
 
-            res.json(departureSet.recordset);
-            console.log(departureSet.recordset);
+        //var returnSet = await poolConnection.request()
+        //    .query(`Select * FROM SkyConnect.dbo.Flights where FlightDepartureCity='${FlightArrivalCity}' and FlightArrivalCity='${FlightDepartureCity}' and FlightDepartureDate='${FlightReturnDate}'`);
 
+      
+            
+     
+        res.json(departureSet.recordset);
 
         poolConnection.close();
     }
@@ -74,6 +77,19 @@ app.get("/allFlights", async (req, res) => {
     try {       
         var poolConnection = await sql.connect(dbConfig);
         var resultSet = await poolConnection.request().query(`Select * FROM SkyConnect.dbo.Flights`);
+        res.json(resultSet.recordsets);
+        poolConnection.close();
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+});
+
+app.get("/agentSales", async (req, res) => {
+    try {
+        var poolConnection = await sql.connect(dbConfig);
+        var resultSet = await poolConnection.request().query(`select Count(*) as AgentSales, users.UserFirstName, users.UserId from SkyConnect.dbo.flights as flights inner join SkyConnect.dbo.users as users on users.RoleId = flights.FlightBookingAgent group by users.UserFirstName, users.UserId;`);
+        console.log(resultSet.recordsets);
         res.json(resultSet.recordsets);
         poolConnection.close();
     }
@@ -111,12 +127,10 @@ app.post("/SignIn", async (req, res) => {
             .input('UserName', sql.VarChar, userName)
             .input('UserPassword', sql.VarChar, userPassword)
             .query('Select * FROM SkyConnect.dbo.Users where UserName=@userName and UserPassword=@userpassword');
-
          
         if (resultSet.recordset.length == 1) {
-            //res.json(resultSet.recordset);
-            res.status(200).send('logged in')
-                console.log('success')
+            res.status(200).json(resultSet.recordset).send();
+           
             } else {
                 res.send('Invalid Credentials. Please Try Again.');
             }            
