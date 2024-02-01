@@ -1,16 +1,17 @@
-import HomePage from './components/HomePage.jsx';
+import HomePage from './components/HomePage.js';
 import SignIn from './components/SignIn.js';
 import ForgotPassword from './components/ForgotPassword.jsx';
-import MyFlights from './components/MyFlights.jsx';
+import MyFlights from './components/MyFlights.js';
 import About from './components/About.jsx';
-import SignUp from './components/SignUp.jsx';
+import SignUp from './components/SignUp.js';
 import Header from './components/Header.jsx';
+import AdminPage from './components/AdminPage.js';
+import Cart from './components/Cart.js';
+import PaymentSuccess from './components/PaymentSuccess.js';
 import plane from './LoginPagePlane.png';
 import { Route, Routes, Link } from "react-router-dom";
-import styled from "styled-components";
 
 function App() {
-
 
     return (
         <>     
@@ -23,15 +24,18 @@ function App() {
             }}>
         <Header />
 
-
         <Routes>
             <Route path="/" index element={<HomePage />} />
-            <Route path="signin" element={<SignIn />} />
+            <Route path="SignIn" element={<SignIn />} />
             <Route path="about" element={<About />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="SignUp" element={<SignUp />} />
             <Route path="forgotpassword" element={<ForgotPassword />} />
             <Route path="myflights" element={<MyFlights />} />
-            </Routes>  
+            <Route path="admin" element={<AdminPage />} />
+            <Route path="/paymentSuccess" element={<PaymentSuccess />} />
+        </Routes>           
+
         </div>
    </>
   );

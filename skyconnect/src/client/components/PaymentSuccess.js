@@ -1,46 +1,47 @@
+import skyConnect from '../SkyConnect_logo_transparent.png';
 import styled from "styled-components";
+import { Outlet, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import '../App.css';
 
 const url = "https://skyconnect-2b47.onrender.com";
+//const url = "http://localhost:4002";
+
+function PaymentSuccess() {
 
 
-function About() {
+    const navigate = useNavigate();
 
-   
 
     return (
 
-    <>
-        <AboutPage>
-               
-                <div class="row">
-                    <div class="col">
-                        <h1>About Us</h1>
-                        <p>
-                            SkyConnect is a reflection of our journey and dedication to transforming the way people search for and book flights. We started this project in 2024 with a team of 4, some of whom are experienced developers, while others are new to the programming world. We came together because we all agree that searching for airplane flights can be frustrating, and we want to make it easier for everyone to book flights and spend time with their families, especially during the holidays. This page is not just a formality; it's a way for us to share our vision, history, and the diverse expertise of our team. We want to build trust and credibility with our users by being transparent about who we are and what we aim to achieve. Our goal is to simplify the air travel process and make it more customer-centric.
-                        </p>
-                    </div>
+        <>
+            <Success>
 
-                    <div class="col2">
-                        <div class="form-box">
-                            <h1 id="title">Meet the Team</h1>
-                            <h2 id="body">Michelle Elson</h2>
-                            <h2 id="body">Robert Feagley</h2>
-                            <h2 id="body">Kevin Richardson</h2>
-                            <h2 id="body">Jacob Casey</h2>
 
-                        </div>
+                <div className="col2">
+                    <div className="form-box">
+                        <h1 id="title">Congratulations!</h1>
+                        <form>
+
+                            <p className="S">Payment Successful</p>
+
+                            <h2 className="RH"><a href="" onClick={() => navigate('/')}>Return Home</a> </h2>
+
+
+                        </form>
                     </div>
                 </div>
-
-        </AboutPage>
+            </Success>
         </>
     );
-}
+};
 
-export default About;
+export default PaymentSuccess;
 
-const AboutPage = styled.div`
+const Success = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
@@ -109,25 +110,14 @@ nav ul li a
 
 .col
 {
-    flex-basis: 50%;
-}
 
-.col h1 {
-    margin-left: 30%;
-    font-size: 50px;
-}
-
-.col p {
-    
-    font-size: 15px;
-    letter-spacing: 1px ;
-    word-spacing: 0px;
-    
 }
 
 .col2
 {
-    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+
 }
 
 h1
@@ -148,10 +138,10 @@ p
 {
     height: 75%;
     width: 45%;
-    position: absolute;
+    position: center;
     top: 15%;
     left: 50%;
-    background: rgba(250, 250, 252, 0.2);
+    background: rgba(250, 250, 252, 0.5);
     padding: 50px 60px 70px;
     text-align: center;
 }
@@ -163,10 +153,10 @@ p
     height: 4px;
     border-radius: 3px;
     background: #3c00a0;
-    position: absolute;
+    position: center;
     bottom: -12px;
     left: 50%;
-    transform: translatex(-50px);
+    transform: translate(-50px);
 }
 
 .col2 h1
@@ -175,14 +165,6 @@ p
     margin-bottom: 60px;
     margin-top: -15px;
     color: #3c00a0;
-    position: relative;
-}
-
-.col2 h2
-{
-    font-size: 20px;
-    margin-top: 75px;
-    color: #d1c1eb;
     position: relative;
 }
 
@@ -222,8 +204,27 @@ button:hover
 
 form
 {
-    margin-top: -40px;    
-} box-sizing: border-box;
+    margin-top: 40px; 
+    line-height: 200px;
+
+}
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #5349e2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+  }
+.button:hover {
+    background-color: #3a0637;
+  }
+
+.S {
+    font-size: 50px;
+    line-height: 100px;
+    color: #3c00a0;
 }
   
 `;

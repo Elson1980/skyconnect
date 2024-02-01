@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Registration Home Page</title>
+    <link rel="stylesheet" href="Payment.css"></link>
+    <script src="https://kit.fontawesome.com/2788c4b3c9.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container"> 
+
+        <div class="navbar">
+            <img src="SkyConnectsmall.png" class="Logo">
+            <nav>
+                <ul>
+                    <li><a href="HomePage.html">Home</a> </li>
+                    <li><a href="MyFlights.html">My Flights</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="SignIn.html">Sign In</a> </li>       
+                </ul>
+            </nav>
+        </div>
+
+            <div class="col2">
+                <div class="form-box">
+                    <h1 id="title">Enter your payment details</h1>
+                    <form>
+            
+                        <label for="from">Name</label>
+                        <input type="text" id="from" name="from" placeholder="Name on card" required>
+                
+                        <label for="to">Card number</label>
+                        <input type="text" id="to" name="to" placeholder="####-####-####">
+                
+                        <label for="depart">Expiration Date</label>
+                        <input type="date" id="depart" name="depart">
+                
+                        <label for="return">Security code</label>
+                        <input type="text" id="return" name="return" placeholder="###">
+                
+                        <label for="class">Card type</label>
+                        <select id="class" name="class">
+                            <option value="card">Choose card</option>
+                            <option value="economy">Visa</option>
+                            <option value="business">Mastercard</option>
+                            <option value="first">Discover</option>
+                            <option value="card">Other</option>
+                        </select>
+                
+                        <a href="PaymentSuccessful.html" class="button">Pay</a>
+
+            
+                    </form>
+                </div>
+            </div>
+        
+
+    </div>
+
+</body>
+</html>

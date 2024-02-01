@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Available Flights</title>
+    <link rel="stylesheet" type="text/css" href="MyFlights.css">
+    <script src="https://kit.fontawesome.com/2788c4b3c9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="navbar">
+            <img src="SkyConnectsmall.png"class="Logo">
+            <nav>
+                <ul>
+                    <li><a href="HomePage.html">Home</a> </li>
+                    <li><a href="MyFlights.html">My Flights</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="SignIn.html">Sign In</a> </li>       
+                </ul>
+            </nav>
+        </div>
+
+        <!-- <div class="form-box">
+            <h1>Next Available Flights</h1>
+
+            <input type="text" id="filterInput" onkeyup="filterFlights()" placeholder="Filter">
+            <div id="flightInfoContainer"></div>
+
+            <input type="text" id="searchInput" placeholder="Search for flights, airlines, or airports...">
+            <button onclick="searchFlights()">Search</button>
+            <div id="flightInfo"></div>
+        </div>   -->
+    
+
+        <div class="row">
+            <div class="col">
+                <h1 id="title">Next Available Flights</h1>
+                <p>
+                    <input type="text" id="filterInput" onkeyup="filterFlights()" placeholder="Filter">
+                    <div id="flightInfoContainer"></div>
+                </p>
+            </div>
+
+            <div class="col2">
+                <div class="form-box">
+                    <h1 id="title">Search Flights</h1>
+                        <input type="text" id="searchInput" placeholder="Search for flights, airlines, or airports...">
+                        <button onclick="searchFlights()">Search</button>
+                        <div id="flightInfo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        fetch('http://api.aviationstack.com/v1/flights?access_key=a176197a65c40462a17e4b4c28601baf&limit=5')
+        .then(response => response.json())
+        .then(data => {
+            data.data.forEach(flight => {
+                const departureAirport = flight.departure.airport;
+                const scheduledDeparture = new Date(flight.departure.scheduled).toLocaleString();
+                const arrivalAirport = flight.arrival.airport;
+                const airlineName = flight.airline.name || 'Not available';
+                const flightNumber = flight.flight.number || 'Not available';
+
+                const flightInfoDiv = document.getElementById('flightInfoContainer');
+                const flightInfo = document.createElement('div');
+                flightInfo.innerHTML = `
+                    <p class="flight-number">Flight Number: ${flightNumber}</p>
+                    <p class="airline">Airline: ${airlineName}</p>
+                    <p class="departure">Departure Airport: ${departureAirport} (Scheduled: ${scheduledDeparture})</p>
+                    <p class="arrival">Arrival Airport: ${arrivalAirport}</p>
+                    <hr>
+                `;
+                flightInfoDiv.appendChild(flightInfo);
+            });
+        })
+        .catch(error => {
+            console.log('Error fetching flight data: ', error);
+        });
+
+    function filterFlights() {
+        let input, filter, flightInfo, p, i, txtValue;
+        input = document.getElementById('filterInput');
+        filter = input.value.toUpperCase();
+        flightInfo = document.getElementById('flightInfoContainer');
+        p = flightInfo.getElementsByTagName('p');
+        for (i = 0; i < p.length; i++) {
+            txtValue = p[i].textContent || p[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                p[i].style.display = '';
+            } else {
+                p[i].style.display = 'none';
+            }
+        }
+    }
+
+        function searchFlights() {
+        let input, filter;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        
+        fetch('https://api.aviationstack.com/v1/flights?access_key=176197a65c40462a17e4b4c28601baf&limit=3')
+            .then(response => response.json())
+            .then(data => {
+                const filteredFlights = data.data.filter(flight => {
+                    return (
+                        flight.flight.iata.toUpperCase().includes(filter) ||
+                        flight.airline.name.toUpperCase().includes(filter) ||
+                        flight.departure.airport.toUpperCase().includes(filter) ||
+                        flight.arrival.airport.toUpperCase().includes(filter)
+                    );
+                });
+
+                const flightInfoDiv = document.getElementById('flightInfo');
+                flightInfoDiv.innerHTML = ''; 
+
+                filteredFlights.slice(0, 3).forEach(flight => {
+                    const departureAirport = flight.departure.airport;
+                    const scheduledDeparture = new Date(flight.departure.scheduled).toLocaleString();
+                    const arrivalAirport = flight.arrival.airport;
+                    const airlineName = flight.airline.name || 'Not available';
+                    const flightNumber = flight.flight.iata || 'Not available';
+
+                    const flightInfo = document.createElement('div');
+                    flightInfo.innerHTML = `
+                        <p class="flight-number">Flight Number: ${flightNumber}</p>
+                        <p class="airline">Airline: ${airlineName}</p>
+                        <p class="departure">Departure Airport: ${departureAirport} (Scheduled: ${scheduledDeparture})</p>
+                        <p class="arrival">Arrival Airport: ${arrivalAirport}</p>
+                        <hr>
+                    `;
+                    flightInfoDiv.appendChild(flightInfo);
+                });
+            })
+            .catch(error => {
+                console.log('Error fetching flight data: ', error);
+            });
+    }
+    </script>
+</body>
+</html>

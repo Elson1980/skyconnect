@@ -1,33 +1,5 @@
 
----If Tables Exist Proceed with 1 and 2
-/*** 1. Alter Table to drop constraints
-
---TER TABLE [dbo].[Users] DROP CONSTRAINT [FK_UserToRole]
---
-
---ALTER TABLE [dbo].[Roles] DROP CONSTRAINT [FK_RoleId]
---GO
-
-/***2. op Tables if they exist ***/
-
-
---IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Roles]') AND type in (N'U'))
---DROP TABLE [dbo].[Roles]
---GO
-
---IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND type in (N'U'))
---DROP TABLE [dbo].[Users]
---GO
---Create the Database
-
-CREATE DATABASE [SkyConnect]  (EDITION = 'GeneralPurpose', SERVICE_OBJECTIVE = 'GP_S_Gen5_2', MAXSIZE = 32 GB) WITH CATALOG_COLLATION = SQL_Latin1_General_CP1_CI_AS, LEDGER = OFF;
-GO
-
-ALTER DATABASE [SkyConnect] SET  READ_WRITE 
-GO
-
-
----Creates Role Table
+--Creates Roles Table
 CREATE TABLE [dbo].[Roles](
 	[RoleId] [int] IDENTITY(1,1) NOT NULL,
 	[RoleName] [varchar](50) NOT NULL,
@@ -38,13 +10,15 @@ CREATE TABLE [dbo].[Roles](
 ) ON [PRIMARY]
 GO
 
-
-----Creates User Table
+--Creates User Table
 CREATE TABLE [dbo].[Users](
 	[UserId] [int] IDENTITY(1,1) NOT NULL,
-	[UserName] [varchar](50) NOT NULL,
-	[UserPassword] [varchar](50) NOT NULL,
+	[UserFirstName] [varchar](50) NOT NULL,
+	[UserLastName] [varchar](50) NOT NULL,
 	[UserEmail] [varchar](50) NOT NULL,
+	[UserPhoneNumber] [varchar](50) NOT NULL,
+	[UserName] [varchar](15) NOT NULL,
+	[UserPassword] [varchar](50) NOT NULL,
 	[RoleId] [int] NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
@@ -53,7 +27,7 @@ CREATE TABLE [dbo].[Users](
 ) ON [PRIMARY]
 GO
 
----Adds Table Constraints
+--Adds Table Constraints
 ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_UserToRole] FOREIGN KEY([RoleId])
 REFERENCES [dbo].[Roles] ([RoleId])
 GO
@@ -67,6 +41,17 @@ GO
 
 ALTER TABLE [dbo].[Roles] CHECK CONSTRAINT [FK_RoleId]
 GO
+
+--Add Flight Status Table
+CREATE TABLE [dbo].[FlightStatus](
+	[FlightStatusId] [int] IDENTITY(1,1) NOT NULL,
+	[FlightStatus] [varchar](50) NOT NULL
+) ON [PRIMARY]
+GO
+
+
+
+
 
 
 ---Add Roles to Role Table
@@ -98,38 +83,141 @@ USE [SkyConnect]
 GO
 
 INSERT INTO [dbo].[Users]
-           ([UserName]
-           ,[UserPassword]
+           ([UserFirstName]
+           ,[UserLastName]
            ,[UserEmail]
+           ,[UserPhoneNumber]
+           ,[UserName]
+           ,[UserPassword]
            ,[RoleId])
      VALUES
-           ('User1',
-           'password',
-           'pretend1@mail.mil',
-            1)
+           ('User1FN',
+           'User1LN'
+           ,'User1@pretend.mail.com'
+           ,'111-111-1111'
+           ,'User1'
+           ,'password'
+           ,1)
 GO
 
 INSERT INTO [dbo].[Users]
-           ([UserName]
-           ,[UserPassword]
+           ([UserFirstName]
+           ,[UserLastName]
            ,[UserEmail]
+           ,[UserPhoneNumber]
+           ,[UserName]
+           ,[UserPassword]
            ,[RoleId])
      VALUES
-           ('Admin1',
-           'password',
-           'pretend2@mail.mil',
-            2)
+           ('Admin2FN',
+           'Admin2LN'
+           ,'Admin1@pretend.mail.com'
+           ,'222-222-2222'
+           ,'Admin2'
+           ,'password'
+           ,2)
 GO
 
 INSERT INTO [dbo].[Users]
-           ([UserName]
-           ,[UserPassword]
+           ([UserFirstName]
+           ,[UserLastName]
            ,[UserEmail]
+           ,[UserPhoneNumber]
+           ,[UserName]
+           ,[UserPassword]
            ,[RoleId])
      VALUES
-           ('Agent1',
-           'password',
-           'pretend3@mail.mil',
-            3)
+           ('Agent1FN',
+           'Agent1LN'
+           ,'Agent1@pretend.mail.com'
+           ,'444-444-4444'
+           ,'Agent1'
+           ,'password'
+           ,3)
 GO
+
+INSERT INTO [dbo].[Users]
+           ([UserFirstName]
+           ,[UserLastName]
+           ,[UserEmail]
+           ,[UserPhoneNumber]
+           ,[UserName]
+           ,[UserPassword]
+           ,[RoleId])
+     VALUES
+           ('Agent2FN',
+           'Agent2LN'
+           ,'Agent2@pretend.mail.com'
+           ,'222-444-4444'
+           ,'Agent2'
+           ,'password'
+           ,3)
+GO
+
+INSERT INTO [dbo].[Users]
+           ([UserFirstName]
+           ,[UserLastName]
+           ,[UserEmail]
+           ,[UserPhoneNumber]
+           ,[UserName]
+           ,[UserPassword]
+           ,[RoleId])
+     VALUES
+           ('Agent3FN',
+           'Agent3LN'
+           ,'Agent3@pretend.mail.com'
+           ,'333-444-4444'
+           ,'Agent3'
+           ,'password'
+           ,3)
+GO
+
+--Populate Status Table
+USE [SkyConnect]
+GO
+
+INSERT INTO [dbo].[FlightStatus]
+           ([FlightStatus])
+     VALUES
+           ('On Time')
+GO
+
+INSERT INTO [dbo].[FlightStatus]
+           ([FlightStatus])
+     VALUES
+           ('Departed')
+GO
+
+INSERT INTO [dbo].[FlightStatus]
+           ([FlightStatus])
+     VALUES
+           ('Boarding')
+GO
+
+
+INSERT INTO [dbo].[FlightStatus]
+           ([FlightStatus])
+     VALUES
+           ('Delayed')
+GO
+
+INSERT INTO [dbo].[FlightStatus]
+           ([FlightStatus])
+     VALUES
+           ('Landed')
+GO
+
+INSERT INTO [dbo].[FlightStatus]
+           ([FlightStatus])
+     VALUES
+           ('Cancelled')
+GO
+
+
+
+
+
+
+
+
 

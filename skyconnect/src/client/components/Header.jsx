@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate } from "react-router-dom";
-import { Outlet, Link } from "react-router-dom";
+import React from 'react';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function Header() {
@@ -8,13 +7,14 @@ function Header() {
     return (
         <>
             <HeaderBody>
-                    <div class="navbar">
+                    <div className="navbar">
                         <nav>
                             <ul>
-                            <li><Link to="/">Home</Link> </li>
-                            <li><Link to="MyFlights">My Flights</Link> </li>
-                            <li><Link to="About">About</Link> </li>
-                            <li><Link to={'./SignIn'} >Sign In</Link> </li>
+                            <li><Link name="homePage" to={'/'} >Home</Link> </li>
+                            <li><Link to={'./MyFlights'} >My Flights</Link> </li>
+                            <li><Link to={'./About'} >About</Link> </li>
+                            <li><Link name="cart" to={'./Cart'} >Cart</Link> </li>
+                            <li><Link name="signIn" to={'./SignIn'} >Sign In</Link> </li>
                             </ul>
                         </nav>
                     </div>
@@ -25,7 +25,7 @@ function Header() {
 
 export default Header;
 
-const HeaderBody = styled.body`
+const HeaderBody = styled.div`
 
 .navbar
 {

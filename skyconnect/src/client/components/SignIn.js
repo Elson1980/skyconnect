@@ -1,47 +1,61 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from 'react';
+import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import '../App.css';
+//import { sign } from "crypto";
 
 const url = "https://skyconnect-2b47.onrender.com";
-
+//const url = "http://localhost:4002";
 
 
 function SignIn() {
-    
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+  
+    const navigate = useNavigate();
+
+    const [UserName, setUsername] = useState('');
+    const [UserPassword, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
+    const [toSignUp, setToSignUp] = useState(false);
+    
+    //let signInLink = document.getElementsByName("signIn");
 
-   
-    function recordUsername(value) {
-        setUsername(() => value);
-    };
-
-    function recordPassword(value) {
-        setPassword(() => value);
-    };
-
-    const handleSubmit = async e => {
-        e.preventDefault();
-
-        const userData = {
-            UserName: username,
-            UserPassword: password
-        }
-
-        axios.post(`${url}/login`, userData)
-            .then(function (res) {
-                setLoggedIn(true);
-                console.log(userData);
-            })
-            .catch(function (err) {
-                console.log(err);
-            })
-
+    if (toSignUp === true) {
+        return <Navigate to="/SignUp" />;
     }
 
- 
+    const handleSignOut = async (e) => {
+        e.preventDefault();
+        setLoggedIn(false);
+       
+    }
+
+    
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();    
+
+        const userData = {
+           UserName,
+           UserPassword
+        }
+
+        try {
+            const response = await axios.post(`${url}/SignIn`,
+                (userData))
+                .then(function (res) {
+                    if (res.status == 200) {
+                        setLoggedIn(true);  
+                        if (res.data[0].RoleId == 2) {
+                            navigate('/admin')
+                        }
+                    } 
+                })
+        } catch (error) {
+            console.error('Sign-in failed', error);  
+            alert("User Name or Password Incorrect");
+        }
+    }; 
 
     return (
 
@@ -50,50 +64,81 @@ function SignIn() {
 
 
                 <div className="container">
-                   
-                    <div className="form-box">
-                        <h1 id="title">Sign In</h1>
+                    {loggedIn == false ? 
+
+                        <div className="form-box">
+                            <h1 id="title">Sign In</h1>
                             <form onSubmit={handleSubmit}>
                                 <div className="input-group">
 
                                     <div className="input-field">
                                         <i className="fa-solid fa-envelope"></i>
-                                            <input htmlFor="UserName"
-                                                type="text"
-                                                id="username"
-                                                name="UserName"
-                                                value={username}
-                                                required
-                                                placeholder="User Name"
-                                                required={true}
-                                                onChange={(e) => { setUsername(e.target.value) }} />
+                                        <input htmlFor="username"
+                                            type="text"
+                                            id="username"
+                                            value={UserName}
+                                            placeholder="User Name"
+                                            required={true}
+                                            onChange={(e) => { setUsername(e.target.value) }} />
                                     </div>
 
                                     <div className="input-field">
                                         <i className="fa-solid fa-lock"></i>
-                                            <input htmlFor="UserPassword"
-                                                type="text"
-                                                id="password"
-                                                name="UserPassword"
-                                                value={password}
-                                                required
-                                                placeholder="Password"
-                                                onChange={(e) => { setPassword(e.target.value) }} />
+                                        <input htmlFor="password"
+                                            type="text"
+                                            id="password"
+                                            value={UserPassword}
+                                            placeholder="Password"
+                                            onChange={(e) => { setPassword(e.target.value) }} />
                                         <button id="eyeIcon"><i className="fa-solid fa-eye-slash"></i></button>
                                     </div>
 
-                                        <br /><a href="/ForgotPassword">Forgot Password</a><br />
                                     <br />
-                                        <li><a href="/SignUp">Sign Up</a> </li>
+                                    <a href="" onClick={() => navigate('/ForgotPassword')}>Forgot Password</a>
+
+                                    <br />
+                                    <br />
+
+                                    <a href="" onClick={() => setToSignUp(true)}>Sign Up</a>
+
 
                                 </div>
 
                                 <div className="btn-field">
-                                    <button type="submit" id="signinBtn">Sign In</button>
+                                    <button
+                                        type="submit"
+                                        id="signinBtn">Sign In</button>
                                 </div>
 
                             </form>
                         </div>
+
+                        :
+
+                        <div className="form-box">
+                            <h1 id="title">Sign Out</h1>
+
+                            <br />
+                            <label>{UserName}</label>
+                            <br />
+                            <br />
+                            <form onSubmit={handleSignOut}>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <div className="btn-field">
+                                    <button
+                                        type="submit"
+                                        id="signinBtn">Sign Out</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+
+                    }
                     </div>
     
             

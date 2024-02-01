@@ -1,11 +1,9 @@
 require("dotenv").config();
 const express = require('express');
-//const os = require('os');
 const cors = require("cors");
 const app = express();
 const sql = require('mssql');
 const parser = require("body-parser");
-//const { PassThrough } = require("stream");
 //const bcrypt = require('bcryptjs');
 
 app.use(express.static("dist"));
@@ -16,9 +14,6 @@ app.use(cors({
     credentials: true,
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
 }));
-
-//app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
-
 
 const dbConfig = {
     user: process.env.URI_User, 
@@ -57,14 +52,8 @@ app.post("/flights", async (req, res) => {
             .input('FlightArrivalCity', sql.VarChar, FlightArrivalCity)
             .input('FlightDepartureDate', sql.Date, FlightDepartureDate)
             .query('Select * FROM SkyConnect.dbo.Flights where FlightDepartureCity=@FlightDepartureCity and FlightArrivalCity=@FlightArrivalCity and FlightDepartureDate=@FlightDepartureDate');
-
-        //var returnSet = await poolConnection.request()
-        //    .query(`Select * FROM SkyConnect.dbo.Flights where FlightDepartureCity='${FlightArrivalCity}' and FlightArrivalCity='${FlightDepartureCity}' and FlightDepartureDate='${FlightReturnDate}'`);
-
-      
-            
-     
-        res.json(departureSet.recordset);
+                    
+       res.json(departureSet.recordset);
 
         poolConnection.close();
     }
@@ -143,13 +132,37 @@ app.post("/SignIn", async (req, res) => {
     }
 });
 
-//app.get('/HomePage', (req, res) => {
-//    if (req.session.user) {
-//        res.send(`Welcome, ${req.session.user}!`);
-//    } else {
- //       res.redirect('/');
-//    }
-//})
+app.post("/SignUp", async (req, res) => {
+
+    let poolConnection = await sql.connect(dbConfig);
+
+    const flightCompany = req.body.FlightCompany;
+    const flightDepartureDate = req.body.FlightDepartureDate;
+    const flightDepartureTime = req.body.FlightDepartureTime;
+    const flightDepartureLocation = req.body.FlightDepartureLocation;
+    const flightDepartureCity = req.body.FlightDepartureCity;
+    const flightArrivalDate = req.body.FlightArrivalDate;
+    const flightArrivalTime = req.body.FlightArrivalTime;
+    const flightArrivalLocation = req.body.FlightArrivalLocation;
+    const flightSeatsAvailable = req.body.FlightSeatsAvailable;
+    const flightPrice = req.body.FlightPrice;
+    const flightStatus = req.body.FlightStatus;
+    const flightBookingAgent = req.body.FlightBookingAgent;
+    
+    try {
+        const addFlight = await poolConnection
+            .request()
+            .query(`INSERT INTO SkyConnect.dbo.Users (FlightCompany, FlightDepartureDate, FlightDepartureTime, FlightDepartureLocation, FlightDepartureCity, FlightArrivalDate, FlightArrivalTime, FlightArrivalLocation, FlightSeatsAvailable, FlightPrice, FlightStatus, FlightBookingAgent)
+                VALUES ('${flightCompany}', '${flightDepartureDate}', '${flightDepartureTime}', '${flightDepartureLocation}', '${flightDepartureCity}', '${flightArrivalDate}', '${flightArrivalTime}', '${flightArrivalLocation}', ${flightSeatsAvailable}. ${flightPrice}, ${flightStatus}, ${flightBookingAgent})`);
+
+        res.status(200).json({ message: 'Data inserted successfully', addFlight });
+        poolConnection.close();
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.post("/SignUp", async (req, res) => {
 
@@ -162,11 +175,11 @@ app.post("/SignUp", async (req, res) => {
     const userName = req.body.UserName;
     const userPassword = req.body.UserPassword;
     const roleId = req.body.RoleId;
-    
+
     try {
         const newUser = await poolConnection
             .request()
-            .query(`INSERT INTO SkyConnect.dbo.Users (UserFirstName, UserLastName, UserEmail, UserPhoneNumber, UserName, UserPassword, RoleId)
+            .query(`INSERT INTO SkyConnect.dbo.Flights (UserFirstName, UserLastName, UserEmail, UserPhoneNumber, UserName, UserPassword, RoleId)
                 VALUES ('${userFirstName}', '${userLastName}', '${userEmail}', '${userPhoneNumber}', '${userName}', '${userPassword}', ${roleId})`);
 
         res.status(200).json({ message: 'Data inserted successfully', newUser });
@@ -177,7 +190,6 @@ app.post("/SignUp", async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 app.post("/test", async (req, res) => {
     
